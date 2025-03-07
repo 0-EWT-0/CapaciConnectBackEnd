@@ -5,5 +5,5 @@ Integrantes:
 
 - Marquez Peralta Gael Aldair - Usuario de GIT: GahelMqz
 
-- 
-Edgar Medrano Cordova 
+- Edgar Medrano Cordova -  Usuario de GIT: Edgar-MedCor
+
