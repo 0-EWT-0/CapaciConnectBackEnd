@@ -1,0 +1,6 @@
+@CapaciConnectBackend_HostAddress = http://localhost:5188
+
+GET {{CapaciConnectBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
