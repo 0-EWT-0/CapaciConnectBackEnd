@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "rTUFivs1ALG77tM7cszThRXvjSYX6PPO+TMGz/9AqDI=",
+  "Source": "CapaciConnectBackend",
+  "BasePath": "_content/CapaciConnectBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "C:\\Users\\emili\\source\\repos\\CapaciConnectBackend\\CapaciConnectBackend",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
