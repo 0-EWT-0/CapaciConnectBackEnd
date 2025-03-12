@@ -33,6 +33,13 @@ namespace CapaciConnectBackend.Models.Domain
         public int Id_type_id { get; set; }
 
         [ForeignKey("Id_type_id")]
-        public virtual WorkshopTypes? Type { get; set; }
+        public virtual WorkshopTypes? WorkshopType { get; set; }
+
+        public virtual ICollection<Calendars> Calendars { get; set; } = new HashSet<Calendars>();
+        public virtual ICollection<Comments> Comments { get; set; } = new HashSet<Comments>();
+        public virtual ICollection<Progressions> Progressions { get; set; } = new HashSet<Progressions>();
+        public virtual ICollection<Subscriptions> Subscriptions { get; set; } = new HashSet<Subscriptions>();
+        public virtual ICollection<WorkshopMultimedia> WorkshopMultimedia { get; set; } = new HashSet<WorkshopMultimedia>();
+        public virtual ICollection<Reports> Reports { get; set; } = new HashSet<Reports>();
     }
 }

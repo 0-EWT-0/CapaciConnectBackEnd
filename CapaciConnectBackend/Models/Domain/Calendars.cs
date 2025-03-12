@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CapaciConnectBackend.Models.Domain
 {
-    public class Calendar
+    public class Calendars
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

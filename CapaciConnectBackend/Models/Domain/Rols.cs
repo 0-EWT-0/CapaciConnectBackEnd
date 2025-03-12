@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CapaciConnectBackend.Models.Domain
 {
-    public class Roles
+    public class Rols
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

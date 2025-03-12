@@ -40,6 +40,14 @@ namespace CapaciConnectBackend.Models.Domain
         public int Id_rol_id { get; set; } 
 
         [ForeignKey("Id_rol_id")]
-        public virtual Roles? Rol { get; set; }
+        public virtual Rols? Rol { get; set; }
+
+        public virtual ICollection<Workshops> Workshops { get; set; } = new HashSet<Workshops>();
+        public virtual ICollection<Comments> Comments { get; set; } = new HashSet<Comments>();
+        public virtual ICollection<Logs> Logs { get; set; } = new HashSet<Logs>();
+        public virtual ICollection<Progressions> Progressions { get; set; } = new HashSet<Progressions>();
+        public virtual ICollection<Sessions> Sessions { get; set; } = new HashSet<Sessions>();
+        public virtual ICollection<Subscriptions> Subscriptions { get; set; } = new HashSet<Subscriptions>();
+        public virtual ICollection<Reports> Reports { get; set; } = new HashSet<Reports>();
     }
 }
