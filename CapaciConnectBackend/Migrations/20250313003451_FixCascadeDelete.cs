@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CapaciConnectBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class Tables : Migration
+    public partial class FixCascadeDelete : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -189,14 +189,12 @@ namespace CapaciConnectBackend.Migrations
                         name: "FK_Comments_Users_Id_user_id",
                         column: x => x.Id_user_id,
                         principalTable: "Users",
-                        principalColumn: "Id_user",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_user");
                     table.ForeignKey(
                         name: "FK_Comments_Workshops_Id_workshop_id",
                         column: x => x.Id_workshop_id,
                         principalTable: "Workshops",
-                        principalColumn: "Id_workshop",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_workshop");
                 });
 
             migrationBuilder.CreateTable(
@@ -216,14 +214,12 @@ namespace CapaciConnectBackend.Migrations
                         name: "FK_Progressions_Users_Id_user_id",
                         column: x => x.Id_user_id,
                         principalTable: "Users",
-                        principalColumn: "Id_user",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_user");
                     table.ForeignKey(
                         name: "FK_Progressions_Workshops_Id_workshop_id",
                         column: x => x.Id_workshop_id,
                         principalTable: "Workshops",
-                        principalColumn: "Id_workshop",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_workshop");
                 });
 
             migrationBuilder.CreateTable(
@@ -245,14 +241,12 @@ namespace CapaciConnectBackend.Migrations
                         name: "FK_Reports_Users_Id_user_id",
                         column: x => x.Id_user_id,
                         principalTable: "Users",
-                        principalColumn: "Id_user",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_user");
                     table.ForeignKey(
                         name: "FK_Reports_Workshops_Id_workshop_id",
                         column: x => x.Id_workshop_id,
                         principalTable: "Workshops",
-                        principalColumn: "Id_workshop",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_workshop");
                 });
 
             migrationBuilder.CreateTable(
@@ -271,14 +265,12 @@ namespace CapaciConnectBackend.Migrations
                         name: "FK_Subscriptions_Users_Id_user_id",
                         column: x => x.Id_user_id,
                         principalTable: "Users",
-                        principalColumn: "Id_user",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_user");
                     table.ForeignKey(
                         name: "FK_Subscriptions_Workshops_Id_workshop_id",
                         column: x => x.Id_workshop_id,
                         principalTable: "Workshops",
-                        principalColumn: "Id_workshop",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_workshop");
                 });
 
             migrationBuilder.CreateTable(
@@ -295,14 +287,12 @@ namespace CapaciConnectBackend.Migrations
                         name: "FK_WorkshopMultimedia_Multimedia_Id_multimedia_id",
                         column: x => x.Id_multimedia_id,
                         principalTable: "Multimedia",
-                        principalColumn: "Id_multimedia",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_multimedia");
                     table.ForeignKey(
                         name: "FK_WorkshopMultimedia_Workshops_Id_workshop_id",
                         column: x => x.Id_workshop_id,
                         principalTable: "Workshops",
-                        principalColumn: "Id_workshop",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_workshop");
                 });
 
             migrationBuilder.CreateIndex(

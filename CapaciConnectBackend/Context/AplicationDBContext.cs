@@ -57,11 +57,13 @@ namespace CapaciConnectBackend.Context
             modelBuilder.Entity<Comments>()
                 .HasOne(c => c.Workshop)
                 .WithMany(w => w.Comments)
-                .HasForeignKey(c => c.Id_workshop_id);
+                .HasForeignKey(c => c.Id_workshop_id)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Comments>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.Id_user_id);
+                .HasForeignKey(c => c.Id_user_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Logs
             modelBuilder.Entity<Logs>().HasKey(l => l.Id_log);
@@ -75,12 +77,13 @@ namespace CapaciConnectBackend.Context
             modelBuilder.Entity<Reports>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reports)
-                .HasForeignKey(r => r.Id_user_id);
+                .HasForeignKey(r => r.Id_user_id)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Reports>()
                 .HasOne(r => r.Workshops)
                 .WithMany(w => w.Reports)
-                .HasForeignKey(r => r.Id_workshop_id);
-
+                .HasForeignKey(r => r.Id_workshop_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Multimedia
             modelBuilder.Entity<Multimedia>().HasKey(m => m.Id_multimedia);
@@ -90,11 +93,13 @@ namespace CapaciConnectBackend.Context
             modelBuilder.Entity<Progressions>() 
                 .HasOne(p => p.User)
                 .WithMany(u => u.Progressions)
-                .HasForeignKey(p => p.Id_user_id);
+                .HasForeignKey(p => p.Id_user_id)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Progressions>()
                 .HasOne(p => p.Workshop)
                 .WithMany(w => w.Progressions)
-                .HasForeignKey(p => p.Id_workshop_id);
+                .HasForeignKey(p => p.Id_workshop_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Rols
             modelBuilder.Entity<Rols>().HasKey(r => r.Id_rol);
@@ -111,11 +116,13 @@ namespace CapaciConnectBackend.Context
             modelBuilder.Entity<Subscriptions>()
                 .HasOne(s => s.User)
                 .WithMany(u => u.Subscriptions)
-                .HasForeignKey(s => s.Id_user_id);
+                .HasForeignKey(s => s.Id_user_id)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Subscriptions>()
                 .HasOne(s => s.Workshop)
                 .WithMany(w => w.Subscriptions)
-                .HasForeignKey(s => s.Id_workshop_id);
+                .HasForeignKey(s => s.Id_workshop_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //WorkshopMultimedia
             modelBuilder.Entity<WorkshopMultimedia>()
@@ -123,11 +130,13 @@ namespace CapaciConnectBackend.Context
             modelBuilder.Entity<WorkshopMultimedia>()
                 .HasOne(wm => wm.Multimedia)
                 .WithMany(m => m.WorkshopMultimedia)
-                .HasForeignKey(wm => wm.Id_multimedia_id);
+                .HasForeignKey(wm => wm.Id_multimedia_id)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<WorkshopMultimedia>()
                 .HasOne(wm => wm.Workshop)
                 .WithMany(w => w.WorkshopMultimedia)
-                .HasForeignKey(wm => wm.Id_workshop_id);
+                .HasForeignKey(wm => wm.Id_workshop_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //WorkshopTypes
             modelBuilder.Entity<WorkshopTypes>().HasKey(w => w.Id_type);

@@ -15,8 +15,6 @@ namespace CapaciConnectBackend.Models.Domain
 
         [Required]
         public DateTime Created_at { get; set; } = DateTime.UtcNow; 
-
-        [Required]
         public int Id_user_id { get; set; }
 
         [ForeignKey("Id_user_id")]

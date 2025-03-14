@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapaciConnectBackend.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    [Migration("20250312232919_Tables")]
-    partial class Tables
+    [Migration("20250313223930_FixSeesionTokenLength")]
+    partial class FixSeesionTokenLength
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,8 +225,7 @@ namespace CapaciConnectBackend.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id_session");
 
@@ -289,6 +288,10 @@ namespace CapaciConnectBackend.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -394,13 +397,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Users", "User")
                         .WithMany("Comments")
                         .HasForeignKey("Id_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("Comments")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -424,13 +427,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Users", "User")
                         .WithMany("Progressions")
                         .HasForeignKey("Id_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("Progressions")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -443,13 +446,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Users", "User")
                         .WithMany("Reports")
                         .HasForeignKey("Id_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshops")
                         .WithMany("Reports")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -473,13 +476,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Users", "User")
                         .WithMany("Subscriptions")
                         .HasForeignKey("Id_user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("Subscriptions")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -503,13 +506,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Multimedia", "Multimedia")
                         .WithMany("WorkshopMultimedia")
                         .HasForeignKey("Id_multimedia_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("WorkshopMultimedia")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Multimedia");

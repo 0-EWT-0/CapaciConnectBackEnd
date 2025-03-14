@@ -11,7 +11,6 @@ namespace CapaciConnectBackend.Models.Domain
         public int Id_session { get; set; }
 
         [Required]
-        [StringLength(255)]
         public string Token { get; set; } = string.Empty; 
 
         [Required]
