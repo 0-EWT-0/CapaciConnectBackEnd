@@ -3,6 +3,7 @@ using CapaciConnectBackend.Models.Domain;
 using CapaciConnectBackend.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CapaciConnectBackend.Controllers
 {
@@ -21,10 +22,8 @@ namespace CapaciConnectBackend.Controllers
         [HttpGet("AllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
-
         }
 
         [HttpGet("UserById/{userId}")]
@@ -43,15 +42,21 @@ namespace CapaciConnectBackend.Controllers
         [HttpPut("UpdateUserAdmin/{userId}")]
         public async Task<IActionResult> UpdateAdminUser([FromRoute] int userId, [FromBody] UpdateUserAdminDTO userDTO)
         {
+            var role = User.FindFirstValue(ClaimTypes.Role);
 
-            var updatedUser = await _userService.UpdateUserAdminAsync(userId, userDTO);
-
-            if (updatedUser == null)
+            if (role == "1")
             {
-                return NotFound(new { message = "User not found." });
+                var updatedUser = await _userService.UpdateUserAdminAsync(userId, userDTO);
+                if (updatedUser == null)
+                {
+                    return NotFound(new { message = "User not found." });
+                }
+                return Ok(updatedUser);
             }
-
-            return Ok(updatedUser);
+            else
+            {
+                return Unauthorized(new { message = "User unauthorized.", role });
+            }
 
         }
 
@@ -72,15 +77,23 @@ namespace CapaciConnectBackend.Controllers
         [HttpDelete("DeleteUser/{userId}")]
         public async Task<IActionResult> DeleteUser([FromRoute] int userId)
         {
+            var role = User.FindFirstValue(ClaimTypes.Role);
 
-            var deletedUser = await _userService.DeleteUserByIdAsync(userId);
-
-            if (!deletedUser)
+            if (role == "1")
             {
-                return NotFound(new { message = "User not found." });
-            }
+                var deletedUser = await _userService.DeleteUserByIdAsync(userId);
 
-            return Ok(deletedUser);
+                if (!deletedUser)
+                {
+                    return NotFound(new { message = "User not found." });
+                }
+
+                return Ok(deletedUser);
+            }
+            else
+            {
+                return Unauthorized(new { message = "User unauthorized.", role });
+            }
 
         }
     }

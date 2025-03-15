@@ -26,6 +26,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IAuth, AuthService>();
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<ILogs, LogsService>();
+builder.Services.AddScoped<IWorkshop, WorkshopService>();
+builder.Services.AddScoped<ITypes, TypesService>();
+builder.Services.AddScoped<IComments, CommentService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

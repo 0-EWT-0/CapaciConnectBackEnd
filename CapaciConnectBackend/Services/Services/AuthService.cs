@@ -33,6 +33,7 @@ namespace CapaciConnectBackend.Services.Services
                 new Claim(ClaimTypes.NameIdentifier, user.Id_user.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Id_rol_id.ToString())
             };
 
             var token = new JwtSecurityToken(
