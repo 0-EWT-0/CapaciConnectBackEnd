@@ -29,6 +29,7 @@ builder.Services.AddScoped<ILogs, LogsService>();
 builder.Services.AddScoped<IWorkshop, WorkshopService>();
 builder.Services.AddScoped<ITypes, TypesService>();
 builder.Services.AddScoped<IComments, CommentService>();
+builder.Services.AddScoped<ISubscriptions, SubscriptionsService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

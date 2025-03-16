@@ -24,31 +24,65 @@ namespace CapaciConnectBackend.Services.Services
             return comments;
         }
 
-        public async Task<Comments?> GetCommentByWorkshopIdAsync(int workshopId)
+        public async Task<List<Comments>> GetCommentByWorkshopIdAsync(int workshopId)
         {
-            var comments = await _context.Comments.FindAsync(workshopId);
+            var comments = await _context.Comments.Where(c => c.Id_workshop_id == workshopId).AsNoTracking().ToListAsync();
 
             return comments;
         }
 
-        public Task<Comments?> CreateCommentAsync(CommentDTO commentDTO, int userId)
+        public async Task<Comments?> CreateCommentAsync(CommentDTO commentDTO, int userId)
         {
-            throw new NotImplementedException();
+            var newComment = new Comments
+            {
+                Comment = commentDTO.Comment,
+                Created_at = DateTime.Now,
+                Id_user_id = userId,
+                Id_workshop_id = commentDTO.Id_workshop_id,
+            };
+
+            _context.Comments.Add(newComment);
+            await _context.SaveChangesAsync();
+
+            return newComment;
         }
 
-        public Task<Comments?> UpdateCommentAsync(int commentId, UpdateCommentDTO commentDTO)
+        public async Task<Comments?> UpdateCommentAsync(int commentId, UpdateCommentDTO commentDTO)
         {
-            throw new NotImplementedException();
+            var comment = await _context.Comments.FindAsync(commentId);
+
+            if (comment == null) return null;
+
+            comment.Comment = commentDTO.Comment;
+
+            await _context.SaveChangesAsync();
+
+            return comment;
         }
 
-        public Task<bool> DeleteAllWorkshopCommentsAsync(int workshopId)
+        public async Task<bool> DeleteAllWorkshopCommentsAsync(int workshopId)
         {
-            throw new NotImplementedException();
+            var comments = await _context.Comments.Where(c => c.Id_workshop_id == workshopId).ToListAsync();
+
+            if (!comments.Any()) return false;
+
+            _context.Comments.RemoveRange(comments);
+            await _context.SaveChangesAsync();
+
+            return true;
+
         }
 
-        public Task<bool> DeleteCommentAsync(int commentId)
+        public async Task<bool> DeleteCommentAsync(int commentId)
         {
-            throw new NotImplementedException();
+            var comment = await _context.Comments.FindAsync(commentId);
+
+            if (comment == null) return false;
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
     }
