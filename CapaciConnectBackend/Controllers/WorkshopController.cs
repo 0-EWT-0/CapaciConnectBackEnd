@@ -68,7 +68,7 @@ namespace CapaciConnectBackend.Controllers
                 return Unauthorized(new { message = "User unauthorized.", role });
             }
 
-            if (role == "1" || role == "2")
+            if (role == "1" || role == "2" || role == "3")        
             {
                 var updatedWorkshop = await _workshopService.UpdateWorkshopAsync(workshopId, workshopDTO);
 

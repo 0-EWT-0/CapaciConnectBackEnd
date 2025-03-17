@@ -24,7 +24,7 @@ namespace CapaciConnectBackend.Controllers
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "1")
+            if (role == "1" || role == "3")
             {
                 var comments = await _commentsService.GetAllCommentsAsync();
                 return Ok(comments);
@@ -61,9 +61,9 @@ namespace CapaciConnectBackend.Controllers
 
             var createdComment = await _commentsService.CreateCommentAsync(commentDTO, int.Parse(userId));
 
-            if(createdComment == null)
+            if (createdComment == null)
             {
-                return NotFound(new { message = "Workshop Not Found"});
+                return NotFound(new { message = "Workshop Not Found" });
             }
             return Ok(createdComment);
         }

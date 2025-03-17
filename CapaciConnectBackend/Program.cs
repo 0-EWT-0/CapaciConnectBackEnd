@@ -30,6 +30,8 @@ builder.Services.AddScoped<IWorkshop, WorkshopService>();
 builder.Services.AddScoped<ITypes, TypesService>();
 builder.Services.AddScoped<IComments, CommentService>();
 builder.Services.AddScoped<ISubscriptions, SubscriptionsService>();
+builder.Services.AddScoped<ICalendar, CalendarService>();
+builder.Services.AddScoped<IReports, ReportService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>
