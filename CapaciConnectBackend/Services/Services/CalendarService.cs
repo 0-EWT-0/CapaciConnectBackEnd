@@ -1,6 +1,7 @@
 ﻿using CapaciConnectBackend.Context;
 using CapaciConnectBackend.DTOS;
 using CapaciConnectBackend.DTOS.Calendars;
+using CapaciConnectBackend.DTOS.Responses;
 using CapaciConnectBackend.Models.Domain;
 using CapaciConnectBackend.Services.IServices;
 using Microsoft.EntityFrameworkCore;
@@ -11,24 +12,55 @@ namespace CapaciConnectBackend.Services.Services
     {
         private readonly AplicationDBContext _context;
         private readonly IConfiguration _configuration;
-        public CalendarService(AplicationDBContext context, IConfiguration configuration)
+        private readonly IError _errorService;
+        public CalendarService(AplicationDBContext context, IConfiguration configuration, IError errorService)
         {
             _context = context;
             _configuration = configuration;
+            _errorService = errorService;
         }
 
         public async Task<List<Calendars>> GetAllWorkshopCalendarsAsync()
         {
-            var calendars = await _context.Calendars.AsNoTracking().ToListAsync();
+            try
+            {
+                var calendars = await _context.Calendars.AsNoTracking().ToListAsync();
 
-            return calendars;
+                return calendars;
+
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Get Calendar: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return new List<Calendars>();
+            }
         }
 
         public async Task<List<Calendars>> GetWorkshopCalendarsAsync(int workshopId)
         {
-            var calendar = await _context.Calendars.Where(c => c.Id_workshop_id == workshopId).AsNoTracking().ToListAsync();
+            try
+            {
+                var calendar = await _context.Calendars.Where(c => c.Id_workshop_id == workshopId).AsNoTracking().ToListAsync();
 
-            return calendar;
+                return calendar;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Get Calendar: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
         }
 
         public async Task<Calendars?> CreateWorkshopCalendarAsync(CalendarDTO calendarDTO)
@@ -36,45 +68,89 @@ namespace CapaciConnectBackend.Services.Services
             //var exists = await _context.Calendars.AnyAsync(c => c.Id_workshop_id == calendarDTO.Id_workshop_id);
 
             //if (exists) return null;
-
-            var newCalendar = new Calendars
+            try
             {
-                Date_start = calendarDTO.Date_start,
-                Date_end = calendarDTO.Date_end,
-                Id_workshop_id = calendarDTO.Id_workshop_id,
-            };
+                var newCalendar = new Calendars
+                {
+                    Date_start = calendarDTO.Date_start,
+                    Date_end = calendarDTO.Date_end,
+                    Id_workshop_id = calendarDTO.Id_workshop_id,
+                };
 
-            _context.Calendars.Add(newCalendar);
-            await _context.SaveChangesAsync();
+                _context.Calendars.Add(newCalendar);
+                await _context.SaveChangesAsync();
 
-            return newCalendar;
+                return newCalendar;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Post Calendar: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
         }
 
         public async Task<Calendars?> UpdateWorkshopCalendarAsync(UpdateCalendarDTO calendarDTO, int calendarId)
         {
-            var calendar = await _context.Calendars.FindAsync(calendarId);
+            try
+            {
+                var calendar = await _context.Calendars.FindAsync(calendarId);
 
-            if (calendar == null) return null;
+                if (calendar == null) return null;
 
-            calendar.Date_start = calendarDTO.Date_start;
-            calendar.Date_end = calendarDTO.Date_end;
+                calendar.Date_start = calendarDTO.Date_start;
+                calendar.Date_end = calendarDTO.Date_end;
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return calendar;
+                return calendar;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Put Calendar: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
+
         }
 
         public async Task<bool> DeleteWorkshopCalendarAsync(int calendarId)
         {
-            var calendar = await _context.Calendars.FindAsync(calendarId);
+            try
+            {
+                var calendar = await _context.Calendars.FindAsync(calendarId);
 
-            if (calendar == null) return false;
+                if (calendar == null) return false;
 
-            _context.Calendars.Remove(calendar);
+                _context.Calendars.Remove(calendar);
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return true;
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Delete Calendar: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return false;
+            }
+
         }
 
     }

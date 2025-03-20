@@ -11,52 +11,111 @@ namespace CapaciConnectBackend.Services.Services
 
         private readonly AplicationDBContext _context;
         private readonly IConfiguration _configuration;
-        public TypesService(AplicationDBContext context, IConfiguration configuration)
+        private readonly IError _errorService;
+        public TypesService(AplicationDBContext context, IConfiguration configuration, IError errorService)
         {
             _context = context;
             _configuration = configuration;
+            _errorService = errorService;
         }
         public async Task<List<WorkshopTypes>> GetAllTypesAsync()
         {
-            var types = await _context.WorkshopTypes.AsNoTracking().ToListAsync();
+            try
+            {
+                var types = await _context.WorkshopTypes.AsNoTracking().ToListAsync();
 
-            return types;
+                return types;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Get Types: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return new List<WorkshopTypes>();
+            }
         }
 
         public async Task<WorkshopTypes?> GetWorkshopTypeById(int typeId)
         {
-            var type = await _context.WorkshopTypes.FindAsync(typeId);
+            try
+            {
+                var type = await _context.WorkshopTypes.FindAsync(typeId);
 
-            return type;
+                return type;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Get Types: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
         }
 
         public async Task<WorkshopTypes?> CreateWorkshopTypeAsync(WorkshopTypeDTO workshopTypeDTO)
         {
-            var exists = await _context.WorkshopTypes.AnyAsync(w => w.Type_name == workshopTypeDTO.Type_name);
-
-            if (exists) return null;
-
-            var newType = new WorkshopTypes
+            try
             {
-                Type_name = workshopTypeDTO.Type_name,
-            };
+                var exists = await _context.WorkshopTypes.AnyAsync(w => w.Type_name == workshopTypeDTO.Type_name);
 
-            _context.WorkshopTypes.Add(newType);
-            await _context.SaveChangesAsync();
+                if (exists) return null;
 
-            return newType;
+                var newType = new WorkshopTypes
+                {
+                    Type_name = workshopTypeDTO.Type_name,
+                };
+
+                _context.WorkshopTypes.Add(newType);
+                await _context.SaveChangesAsync();
+
+                return newType;
+
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Post Types: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
         }
 
         public async Task<bool> DeleteWorkshopTypeById(int typeId)
         {
-            var type = _context.WorkshopTypes.Find(typeId);
+            try
+            {
+                var type = _context.WorkshopTypes.Find(typeId);
 
-            if (type == null) return false;
+                if (type == null) return false;
 
-            _context.WorkshopTypes.Remove(type);
-            await _context.SaveChangesAsync();
+                _context.WorkshopTypes.Remove(type);
+                await _context.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Delte Types: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return false;
+            }
         }
 
 

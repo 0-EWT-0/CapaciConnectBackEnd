@@ -9,10 +9,12 @@ namespace CapaciConnectBackend.Services.Services
     {
         private readonly AplicationDBContext _context;
         private readonly IConfiguration _configuration;
-        public LogsService(AplicationDBContext context, IConfiguration configuration)
+        private readonly IError _errorService;
+        public LogsService(AplicationDBContext context, IConfiguration configuration, IError errorService)
         {
             _context = context;
             _configuration = configuration;
+            _errorService = errorService;
         }
 
         public async Task<List<Logs>> GetAllLogsAsync()

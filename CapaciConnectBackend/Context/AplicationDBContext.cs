@@ -67,10 +67,10 @@ namespace CapaciConnectBackend.Context
 
             //Logs
             modelBuilder.Entity<Logs>().HasKey(l => l.Id_log);
-            modelBuilder.Entity<Logs>()
-                .HasOne(l => l.User)
-                .WithMany(u => u.Logs)
-                .HasForeignKey(l => l.Id_user_id);
+            //modelBuilder.Entity<Logs>()
+            //    .HasOne(l => l.User)
+            //    .WithMany(u => u.Logs)
+            //    .HasForeignKey(l => l.Id_user_id);
 
             //Reports
             modelBuilder.Entity<Reports>().HasKey(r => r.Id_Report);

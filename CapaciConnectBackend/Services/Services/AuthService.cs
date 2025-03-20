@@ -17,10 +17,12 @@ namespace CapaciConnectBackend.Services.Services
     {
         private readonly AplicationDBContext _context;
         private readonly IConfiguration _configuration;
-        public AuthService(AplicationDBContext context, IConfiguration configuration)
+        private readonly IError _errorService;
+        public AuthService(AplicationDBContext context, IConfiguration configuration, IError errorS)
         {
             _context = context;
             _configuration = configuration;
+            _errorService = errorS;
         }
 
         private string GenerateJWTToken(Users user)
@@ -56,36 +58,14 @@ namespace CapaciConnectBackend.Services.Services
 
                 if (getUser == null)
                 {
-                    var log = new LoginResponse(false, "User Not Found");
-
-                    //var newLog = new Logs
-                    //{
-                    //    Content = log.ToString(),
-                    //    Created_at = DateTime.Now,
-                    //    Id_user_id = 1000++,
-
-                    //};
-                    //_context.Logs.Add(newLog);
-                    //await _context.SaveChangesAsync();
-                    return log;
+                    return new LoginResponse(false, "User Not Found");
                 }
 
                 bool checkPassword = BCrypt.Net.BCrypt.Verify(loginUserDTO.Password, getUser.Password);
 
                 if (!checkPassword)
                 {
-                    var log = new LoginResponse(false, "Invalid Credentials");
-
-                    var newLog = new Logs
-                    {
-                        Content = log.ToString(),
-                        Created_at = DateTime.Now,
-                        Id_user_id = getUser.Id_user
-
-                    };
-                    _context.Logs.Add(newLog);
-                    await _context.SaveChangesAsync();
-                    return log;
+                    return new LoginResponse(false, "Invalid Credentials");
                 }
 
                 var oldSessions = _context.Sessions.Where(s => s.Id_user_id == getUser.Id_user);
@@ -117,16 +97,14 @@ namespace CapaciConnectBackend.Services.Services
             }
             catch (Exception ex)
             {
-                //var errorLog = new Logs
-                //{
-                //    Content = $"Error in Login: {ex.Message}",
-                //    Created_at = DateTime.Now,
-                //    Id_user_id =
-                //};
-                //_context.Logs.Add(errorLog);
-                //await _context.SaveChangesAsync();
+                var log = await _errorService.SaveErrorLogAsync($"Error in Login: {ex.Message}");
 
-                throw;
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return new LoginResponse(false, "An error has ocurred in login");
             }
         }
 
@@ -174,15 +152,14 @@ namespace CapaciConnectBackend.Services.Services
             }
             catch (Exception ex)
             {
-                var errorLog = new Logs
-                {
-                    Content = $"Error in Register: {ex.Message}",
-                    Created_at = DateTime.Now
-                };
-                _context.Logs.Add(errorLog);
-                await _context.SaveChangesAsync();
+                var log = await _errorService.SaveErrorLogAsync($"Error in Register: {ex.Message}");
 
-                throw;
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return new RegistrationResponse(false, "An error has ocurred in Register");
             }
 
         }
@@ -207,16 +184,14 @@ namespace CapaciConnectBackend.Services.Services
             }
             catch (Exception ex)
             {
-                var errorLog = new Logs
+                var log = await _errorService.SaveErrorLogAsync($"Error in Logout: {ex.Message}");
+
+                if (log == null)
                 {
-                    Content = $"Error in Logout: {ex.Message}",
-                    Created_at = DateTime.Now
-                };
+                    Console.WriteLine("Error log could not be saved.");
+                }
 
-                _context.Logs.Add(errorLog);
-                await _context.SaveChangesAsync();
-
-                throw;
+                return new LogoutResponse(false, "An error has ocurred in logout.");
             }
         }
 

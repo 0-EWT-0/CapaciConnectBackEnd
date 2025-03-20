@@ -35,6 +35,7 @@ builder.Services.AddScoped<IReports, ReportService>();
 builder.Services.AddScoped<IProgressions, ProgressionService>();
 builder.Services.AddScoped<IWorkshopMultimedia, WorkshopMultimediaService>();
 builder.Services.AddScoped<IMultimedia, MultimediaService>();
+builder.Services.AddScoped<IError, ErrorService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

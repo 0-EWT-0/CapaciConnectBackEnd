@@ -12,72 +12,132 @@ namespace CapaciConnectBackend.Services.Services
     {
         private readonly AplicationDBContext _context;
         private readonly IConfiguration _configuration;
-        public MultimediaService(AplicationDBContext context, IConfiguration configuration)
+        private readonly IError _errorService;
+        public MultimediaService(AplicationDBContext context, IConfiguration configuration, IError errorService)
         {
             _context = context;
             _configuration = configuration;
+            _errorService = errorService;
         }
 
         public async Task<List<Multimedia>> GetAllMultimediaAsync()
         {
-            var multimedia = await _context.Multimedia.AsNoTracking().ToListAsync();
+            try
+            {
+                var multimedia = await _context.Multimedia.AsNoTracking().ToListAsync();
 
-            return multimedia;
+                return multimedia;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Get Multimedia: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return new List<Multimedia>();
+            }
         }
 
         public async Task<Multimedia?> CreateMultimediaAsync(MultimediaDTO multimediaDTO)
         {
-            if (string.IsNullOrEmpty(multimediaDTO.Media_url) || string.IsNullOrEmpty(multimediaDTO.Media_type))
+            try
             {
+                if (string.IsNullOrEmpty(multimediaDTO.Media_url) || string.IsNullOrEmpty(multimediaDTO.Media_type))
+                {
+                    return null;
+                }
+
+                if (!Enum.TryParse<MediaType>(multimediaDTO.Media_type, true, out var mediaType))
+                {
+                    return null;
+                }
+
+                var newMultimedia = new Multimedia
+                {
+                    Media_type = mediaType,
+                    Media_url = multimediaDTO.Media_url
+                };
+
+                _context.Multimedia.Add(newMultimedia);
+                await _context.SaveChangesAsync();
+
+                return newMultimedia;
+
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Post Multimedia: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
                 return null;
             }
 
-            if (!Enum.TryParse<MediaType>(multimediaDTO.Media_type, true, out var mediaType))
-            {
-                return null;
-            }
-
-            var newMultimedia = new Multimedia
-            {
-                Media_type = mediaType,
-                Media_url = multimediaDTO.Media_url
-            };
-
-            _context.Multimedia.Add(newMultimedia);
-            await _context.SaveChangesAsync();
-
-            return newMultimedia;
         }
 
 
         public async Task<Multimedia?> UpdateMultimediaAsync(UpdateMultimediaDTO multimediaDTO, int multimediaId)
         {
-            var multimedia = await _context.Multimedia.FindAsync(multimediaId);
+            try
+            {
+                var multimedia = await _context.Multimedia.FindAsync(multimediaId);
 
-            if (multimedia == null) return null;
+                if (multimedia == null) return null;
 
-            multimedia.Media_url = multimediaDTO.Media_url;
+                multimedia.Media_url = multimediaDTO.Media_url;
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return multimedia;
+                return multimedia;
+            }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Put Multimedia: {ex.Message}");
+
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
+
+                return null;
+            }
         }
 
         public async Task<bool> DeleteMultimediaAsync(int multimediaId)
         {
-            var multimedia = await _context.Multimedia.Include(wm => wm.WorkshopMultimedia).FirstOrDefaultAsync(m => m.Id_multimedia == multimediaId);
-
-            if (multimedia == null) return false;
-
-            if (multimedia.WorkshopMultimedia.Any())
+            try
             {
-                _context.WorkshopMultimedia.RemoveRange(multimedia.WorkshopMultimedia);
+                var multimedia = await _context.Multimedia.Include(wm => wm.WorkshopMultimedia).FirstOrDefaultAsync(m => m.Id_multimedia == multimediaId);
+
+                if (multimedia == null) return false;
+
+                if (multimedia.WorkshopMultimedia.Any())
+                {
+                    _context.WorkshopMultimedia.RemoveRange(multimedia.WorkshopMultimedia);
+                }
+
+                _context.Multimedia.Remove(multimedia);
+                await _context.SaveChangesAsync();
+
+                return true;
             }
+            catch (Exception ex)
+            {
+                var log = await _errorService.SaveErrorLogAsync($"Error in Delete Multimedia: {ex.Message}");
 
-            _context.Multimedia.Remove(multimedia);
-            await _context.SaveChangesAsync();
+                if (log == null)
+                {
+                    Console.WriteLine("Error log could not be saved.");
+                }
 
-            return true;
+                return false;
+            }
         }
     }
 }
