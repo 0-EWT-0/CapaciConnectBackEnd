@@ -39,6 +39,24 @@ namespace CapaciConnectBackend.Controllers
             return Ok(user);
         }
 
+        [HttpGet("UserInfo")]
+
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+            else
+            {
+                var user = await _userService.GetUserInfo(int.Parse(userId));
+
+                return Ok(user);
+            }
+        }
+
         [HttpPut("UpdateUserAdmin/{userId}")]
         public async Task<IActionResult> UpdateAdminUser([FromRoute] int userId, [FromBody] UpdateUserAdminDTO userDTO)
         {

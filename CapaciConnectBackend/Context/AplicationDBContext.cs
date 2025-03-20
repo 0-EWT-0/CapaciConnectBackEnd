@@ -5,7 +5,7 @@ namespace CapaciConnectBackend.Context
 {
     public class AplicationDBContext : DbContext
     {
-        public AplicationDBContext(DbContextOptions<AplicationDBContext> options) : base(options) 
+        public AplicationDBContext(DbContextOptions<AplicationDBContext> options) : base(options)
         {
             // Checar error al "dotnet ef database update"
         }
@@ -35,7 +35,7 @@ namespace CapaciConnectBackend.Context
                 .HasForeignKey(u => u.Id_rol_id);
 
             //Workshops
-            modelBuilder.Entity<Workshops>().HasKey( w => w.Id_workshop);
+            modelBuilder.Entity<Workshops>().HasKey(w => w.Id_workshop);
             modelBuilder.Entity<Workshops>()
                 .HasOne(w => w.WorkshopType)
                 .WithMany(t => t.Workshops)
@@ -87,10 +87,13 @@ namespace CapaciConnectBackend.Context
 
             //Multimedia
             modelBuilder.Entity<Multimedia>().HasKey(m => m.Id_multimedia);
+            modelBuilder.Entity<Multimedia>()
+                .Property(m => m.Media_type)
+                .HasConversion<string>();
 
             //Progressions
             modelBuilder.Entity<Progressions>().HasKey(p => p.Id_progression);
-            modelBuilder.Entity<Progressions>() 
+            modelBuilder.Entity<Progressions>()
                 .HasOne(p => p.User)
                 .WithMany(u => u.Progressions)
                 .HasForeignKey(p => p.Id_user_id)

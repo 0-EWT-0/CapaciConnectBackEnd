@@ -13,7 +13,7 @@ namespace CapaciConnectBackend.Controllers
     public class CalendarController : ControllerBase
     {
         private readonly ICalendar _calendarService;
-
+        
         public CalendarController(ICalendar calendarService)
         {
             _calendarService = calendarService;

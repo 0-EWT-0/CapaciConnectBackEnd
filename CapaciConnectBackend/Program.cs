@@ -33,6 +33,8 @@ builder.Services.AddScoped<ISubscriptions, SubscriptionsService>();
 builder.Services.AddScoped<ICalendar, CalendarService>();
 builder.Services.AddScoped<IReports, ReportService>();
 builder.Services.AddScoped<IProgressions, ProgressionService>();
+builder.Services.AddScoped<IWorkshopMultimedia, WorkshopMultimediaService>();
+builder.Services.AddScoped<IMultimedia, MultimediaService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

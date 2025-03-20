@@ -83,5 +83,12 @@ namespace CapaciConnectBackend.Services.Services
 
             return true;
         }
+
+        public async Task<List<Users>> GetUserInfo(int userId)
+        {
+            var user = await _context.Users.Where(u => u.Id_user == userId).AsNoTracking().ToListAsync();
+
+            return user;
+        }
     }
 }

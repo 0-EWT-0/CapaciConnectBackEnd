@@ -20,6 +20,7 @@ namespace CapaciConnectBackend.Models.Domain
 
         [Required]
         [StringLength(10)]
+        [Column(TypeName = "VARCHAR(10)")]
         public MediaType Media_type { get; set; }
 
         public virtual ICollection<WorkshopMultimedia> WorkshopMultimedia { get; set; } = new HashSet<WorkshopMultimedia>();

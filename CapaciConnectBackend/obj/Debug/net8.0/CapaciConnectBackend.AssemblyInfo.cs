@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CapaciConnectBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+707233f62e37331f356d6065b6326457a88f898e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6af7bd91916bf6166d5d7b680589c0488ad984a")]
 [assembly: System.Reflection.AssemblyProductAttribute("CapaciConnectBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CapaciConnectBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

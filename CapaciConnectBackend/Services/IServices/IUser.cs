@@ -5,6 +5,7 @@ namespace CapaciConnectBackend.Services.IServices
 {
     public interface IUser
     {
+       Task<List<Users>> GetUserInfo(int userId);
        Task<List<Users>> GetAllUsersAsync();
        Task<Users?> GetUserByIdAsync(int userId);
        Task<Users?> UpdateUserAdminAsync(int userId, UpdateUserAdminDTO userDTO);
