@@ -20,6 +20,9 @@ namespace CapaciConnectBackend.Models.Domain
         [Required]
         public string Content { get; set; } = string.Empty;
 
+        [StringLength(255)]
+        public string? Image { get; set; }
+
         [Required]
         public DateTime Created_at { get; set; } = DateTime.UtcNow;
 

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    container_name: sqlserver-container
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "capaciRoot123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - capaci-net
+
+  backend:
+    container_name: capaci-backend
+    build:
+      context: .
+      dockerfile: CapaciConnectBackend/Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver-container;Database=CapaciConnectDB;User Id=sa;Password=capaciRoot123;TrustServerCertificate=True;"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - capaci-net
+
+networks:
+  capaci-net:
+    name: capaci-net  
+    driver: bridge

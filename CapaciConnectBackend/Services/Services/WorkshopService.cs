@@ -86,6 +86,7 @@ namespace CapaciConnectBackend.Services.Services
                 workshop.Title = workshopDTO.Title;
                 workshop.Description = workshopDTO.Description;
                 workshop.Content = workshopDTO.Content;
+                workshop.Image = workshopDTO.Image;
                 workshop.Id_type_id = workshopDTO.Id_type_id;
 
                 await _context.SaveChangesAsync();
