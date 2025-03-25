@@ -14,6 +14,8 @@ namespace CapaciConnectBackend.DTOS
         [Required]
         public string Content { get; set; } = string.Empty;
 
+        public string? Image { get; set; } = string.Empty;
+
         [Required]
         public int Id_type_id { get; set; }
 

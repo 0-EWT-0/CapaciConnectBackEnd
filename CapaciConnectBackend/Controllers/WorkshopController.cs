@@ -45,7 +45,7 @@ namespace CapaciConnectBackend.Controllers
 
                 if (createdWorkshop == null)
                 {
-                    return BadRequest(new { message = "Workshop already exists." });
+                    return BadRequest(new { message = "Workshop already exists. Or type id dosent exists" });
                 }
 
                 return Ok(createdWorkshop);

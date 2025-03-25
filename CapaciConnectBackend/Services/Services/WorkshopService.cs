@@ -51,6 +51,7 @@ namespace CapaciConnectBackend.Services.Services
                     Title = workshopDTO.Title,
                     Description = workshopDTO.Description,
                     Content = workshopDTO.Content,
+                    Image = workshopDTO.Image,
                     Created_at = DateTime.Now,
                     Id_user_id = userId,
                     Id_type_id = workshopDTO.Id_type_id,
