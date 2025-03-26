@@ -5,7 +5,6 @@ namespace CapaciConnectBackend.DTOS
     public class MultimediaDTO
     {
         [Required]
-        [StringLength(255)]
         public string Media_url { get; set; } = string.Empty;
 
         [Required]

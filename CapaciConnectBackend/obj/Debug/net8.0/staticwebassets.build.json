@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "rTUFivs1ALG77tM7cszThRXvjSYX6PPO+TMGz/9AqDI=",
+  "Hash": "20amdKbHtwskOAy/BrfATRi50OPCUGghJ4dlowvu4Do=",
   "Source": "CapaciConnectBackend",
   "BasePath": "_content/CapaciConnectBackend",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CapaciConnectBackend\\wwwroot",
+      "Source": "CapaciConnectBackend",
+      "ContentRoot": "C:\\Users\\emili\\source\\repos\\CapaciConnectBackend\\CapaciConnectBackend\\wwwroot\\",
+      "BasePath": "_content/CapaciConnectBackend",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

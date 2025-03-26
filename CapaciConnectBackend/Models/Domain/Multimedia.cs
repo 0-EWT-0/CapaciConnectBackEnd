@@ -15,7 +15,6 @@ namespace CapaciConnectBackend.Models.Domain
         public int Id_multimedia { get; set; }
 
         [Required]
-        [StringLength(255)]
         public string Media_url { get; set; } = string.Empty; 
 
         [Required]

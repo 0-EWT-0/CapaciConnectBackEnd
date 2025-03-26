@@ -31,7 +31,6 @@ namespace CapaciConnectBackend.Models.Domain
         [Required]
         public string Password { get; set; } = string.Empty;
 
-        [StringLength(255)]
         public string? Profile_img { get; set; } 
 
         public string? Description { get; set; } 

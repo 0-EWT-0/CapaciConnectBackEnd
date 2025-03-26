@@ -146,3 +146,4 @@ C:\Users\emili\source\repos\CapaciConnectBackend\CapaciConnectBackend\obj\Debug\
 C:\Users\emili\source\repos\CapaciConnectBackend\CapaciConnectBackend\obj\Debug\net8.0\CapaciConnectBackend.pdb
 C:\Users\emili\source\repos\CapaciConnectBackend\CapaciConnectBackend\obj\Debug\net8.0\CapaciConnectBackend.genruntimeconfig.cache
 C:\Users\emili\source\repos\CapaciConnectBackend\CapaciConnectBackend\obj\Debug\net8.0\ref\CapaciConnectBackend.dll
+C:\Users\emili\source\repos\CapaciConnectBackend\CapaciConnectBackend\bin\Debug\net8.0\CapaciConnectBackend.staticwebassets.runtime.json
