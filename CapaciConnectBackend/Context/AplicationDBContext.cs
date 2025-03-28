@@ -103,7 +103,7 @@ namespace CapaciConnectBackend.Context
                 .HasOne(p => p.Workshop)
                 .WithMany(w => w.Progressions)
                 .HasForeignKey(p => p.Id_workshop_id)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             //Rols
             modelBuilder.Entity<Rols>().HasKey(r => r.Id_rol);
@@ -126,7 +126,7 @@ namespace CapaciConnectBackend.Context
                 .HasOne(s => s.Workshop)
                 .WithMany(w => w.Subscriptions)
                 .HasForeignKey(s => s.Id_workshop_id)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             //WorkshopMultimedia
             modelBuilder.Entity<WorkshopMultimedia>()

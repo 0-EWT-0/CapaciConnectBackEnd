@@ -4,6 +4,7 @@ using CapaciConnectBackend.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapaciConnectBackend.Migrations
 {
     [DbContext(typeof(AplicationDBContext))]
-    partial class AplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250328020515_progressionCascade")]
+    partial class progressionCascade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -422,13 +425,13 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Users", "User")
                         .WithMany("Progressions")
                         .HasForeignKey("Id_user_id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("Progressions")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -477,7 +480,7 @@ namespace CapaciConnectBackend.Migrations
                     b.HasOne("CapaciConnectBackend.Models.Domain.Workshops", "Workshop")
                         .WithMany("Subscriptions")
                         .HasForeignKey("Id_workshop_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
