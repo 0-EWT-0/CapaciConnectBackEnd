@@ -58,7 +58,8 @@ namespace CapaciConnectBackend.Context
                 .HasOne(c => c.Workshop)
                 .WithMany(w => w.Comments)
                 .HasForeignKey(c => c.Id_workshop_id)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Comments>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Comments)

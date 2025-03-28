@@ -25,7 +25,7 @@ namespace CapaciConnectBackend.Controllers
         {
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            if (role == "1")
+            if (role == "1" || role == "2")
             {
                 var multimedia = await _multimediaService.GetAllMultimediaAsync();
                 return Ok(multimedia);
